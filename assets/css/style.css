@@ -33,6 +33,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
 }
@@ -80,6 +84,154 @@ button {
 }
 
 /* ============================================================
+   BOOT & LOGIN
+   ============================================================ */
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background:
+    radial-gradient(120% 60% at 50% 0%, var(--accent-soft) 0%, transparent 62%),
+    var(--bg);
+}
+
+.boot .brand-name {
+  font-size: 2.6rem;
+}
+
+.boot-line {
+  font-size: .78rem;
+  color: var(--muted);
+}
+
+.boot-line::after {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  vertical-align: middle;
+  animation: boot-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes boot-pulse {
+  0%, 100% { opacity: .25; transform: scale(.8); }
+  50%      { opacity: 1;   transform: scale(1); }
+}
+
+.auth {
+  min-height: 100dvh;
+  padding: 40px 20px calc(40px + env(safe-area-inset-bottom));
+  display: grid;
+  place-items: center;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 34px 26px 30px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.auth-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.auth-brand .brand-name {
+  font-size: 1.9rem;
+}
+
+.auth-line {
+  margin: 6px 0 0;
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+.auth h1 {
+  margin: 28px 0 8px;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.55rem;
+  font-weight: 600;
+  letter-spacing: -.015em;
+  line-height: 1.2;
+}
+
+.auth-desc {
+  margin: 0 0 22px;
+  font-size: .86rem;
+  color: var(--muted);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.auth-field label {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.auth-field input {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: transparent;
+  font-size: .9rem;
+  outline: none;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.auth-field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.auth-error {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: .8rem;
+  line-height: 1.5;
+}
+
+.auth-form .btn {
+  margin-top: 4px;
+}
+
+.auth-note {
+  margin: 18px 0 0;
+  text-align: center;
+  font-size: .72rem;
+  color: var(--muted);
+}
+
+/* ============================================================
    LAYOUT
    ============================================================ */
 .app {
@@ -92,6 +244,43 @@ button {
 
 .app-header {
   padding: 34px 24px 10px;
+}
+
+.app-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.logout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .7rem;
+  font-weight: 600;
+  transition: color .18s ease, border-color .18s ease, background .18s ease;
+}
+
+.logout-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.logout-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.logout-btn:disabled {
+  opacity: .55;
+  cursor: not-allowed;
 }
 
 .brand {
@@ -268,6 +457,10 @@ button {
   color: var(--muted);
 }
 
+.stage-note.is-error {
+  color: var(--accent);
+}
+
 /* ============================================================
    ROULETTE
    ============================================================ */
@@ -367,6 +560,11 @@ button {
   gap: 8px;
 }
 
+.options-list .list-note {
+  margin: 4px 2px;
+  text-align: left;
+}
+
 .option-item {
   display: flex;
   align-items: center;
@@ -450,6 +648,21 @@ button {
 
 .add-form button:active {
   transform: scale(.94);
+}
+
+.add-form input:disabled,
+.add-form button:disabled,
+.link-btn:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+.add-form button:disabled:hover {
+  background: var(--accent);
+}
+
+.link-btn:disabled:hover {
+  color: var(--muted);
 }
 
 .link-btn {

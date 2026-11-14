@@ -16,16 +16,73 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <script>document.documentElement.classList.add('js');</script>
-  <script src="assets/js/app.js" defer></script>
-  <script src="assets/js/roulette.js" defer></script>
+  <script type="module" src="assets/js/main.js"></script>
+  <script>
+    window.setTimeout(function () {
+      var boot = document.getElementById('bootScreen');
+      if (boot && !boot.hidden) {
+        var line = boot.querySelector('.boot-line');
+        if (line) line.textContent = 'Masih menyambungkan… coba muat ulang kalau lama.';
+      }
+    }, 10000);
+  </script>
 </head>
 <body>
-  <div class="app">
 
-    <header class="app-header">
-      <div class="brand">
+  <div class="boot" id="bootScreen">
+    <span class="brand-name">Sela</span>
+    <span class="boot-line">Menyiapkan ruang…</span>
+  </div>
+
+  <!-- ============ LOGIN ============ -->
+  <main class="auth" id="authScreen" hidden>
+    <div class="auth-card">
+      <div class="auth-brand">
         <span class="brand-name">Sela</span>
         <span class="brand-tag">Batam — Jakarta</span>
+      </div>
+      <p class="auth-line">900 km, satu ruang.</p>
+
+      <h1>Masuk dulu, ya</h1>
+      <p class="auth-desc">Ruang ini hanya untuk kita berdua. Pakai akun yang sudah dibuat.</p>
+
+      <form class="auth-form" id="loginForm" novalidate>
+        <div class="auth-field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" required>
+        </div>
+
+        <div class="auth-field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required>
+        </div>
+
+        <p class="auth-error" id="authError" role="alert" hidden></p>
+
+        <button class="btn btn-primary" id="loginBtn" type="submit">Masuk</button>
+      </form>
+
+      <p class="auth-note">Akun dibuat khusus untuk kalian berdua.</p>
+    </div>
+  </main>
+
+  <!-- ============ APLIKASI ============ -->
+  <div class="app" id="appScreen" hidden>
+
+    <header class="app-header">
+      <div class="app-header-top">
+        <div class="brand">
+          <span class="brand-name">Sela</span>
+          <span class="brand-tag">Batam — Jakarta</span>
+        </div>
+        <button class="logout-btn" id="logoutBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/>
+            <path d="M10 8l-4 4 4 4"/>
+            <path d="M6 12h9"/>
+          </svg>
+          <span>Keluar</span>
+        </button>
       </div>
       <p class="brand-line">900 km, satu ruang.</p>
     </header>
@@ -56,7 +113,7 @@
           </button>
         </div>
 
-        <p class="stage-note">Fitur ini menyala setelah data online tersambung.</p>
+        <p class="stage-note">Fitur ini menyala di tahap berikutnya.</p>
       </section>
 
       <!-- ============ KUIS ============ -->
@@ -83,7 +140,7 @@
           </button>
         </div>
 
-        <p class="stage-note">Fitur ini menyala setelah data online tersambung.</p>
+        <p class="stage-note">Fitur ini menyala di tahap berikutnya.</p>
       </section>
 
       <!-- ============ ROULETTE ============ -->
@@ -98,7 +155,7 @@
           <div class="wheel-display" id="rouletteDisplay" aria-live="polite">
             <span class="wheel-idle">Siap diputar</span>
           </div>
-          <button class="btn btn-primary btn-spin" id="spinBtn" type="button">Putar</button>
+          <button class="btn btn-primary btn-spin" id="spinBtn" type="button" disabled>Putar</button>
         </div>
 
         <div class="options-card">
@@ -111,14 +168,14 @@
 
           <form class="add-form" id="addForm">
             <label class="visually-hidden" for="newOption">Ide baru</label>
-            <input id="newOption" name="newOption" type="text" placeholder="Tambah ide baru…" maxlength="60" autocomplete="off" required>
-            <button type="submit" aria-label="Tambahkan ide">+</button>
+            <input id="newOption" name="newOption" type="text" placeholder="Tambah ide baru…" maxlength="60" autocomplete="off" required disabled>
+            <button type="submit" aria-label="Tambahkan ide" disabled>+</button>
           </form>
 
-          <button class="link-btn" id="resetOptions" type="button">Kembalikan daftar awal</button>
+          <button class="link-btn" id="resetOptions" type="button" disabled>Kembalikan daftar awal</button>
         </div>
 
-        <p class="stage-note">Daftar ini masih tersimpan di perangkatmu. Nanti akan tersinkron berdua.</p>
+        <p class="stage-note" id="rouletteStatus" role="status">Daftar ini tersinkron berdua.</p>
       </section>
 
     </main>

@@ -3,14 +3,18 @@
    Simpan berkas inti supaya aplikasi tetap terbuka saat offline.
    ============================================================ */
 
-const CACHE_NAME = 'sela-v1';
+const CACHE_NAME = 'sela-v2';
 
 const CORE_ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './assets/css/style.css',
+  './assets/js/main.js',
   './assets/js/app.js',
+  './assets/js/firebase-config.js',
+  './assets/js/firebase.js',
+  './assets/js/auth.js',
   './assets/js/roulette.js',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',

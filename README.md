@@ -9,36 +9,64 @@ Satu aplikasi, tiga cara untuk tetap dekat.
 
 | Tab | Isi | Status |
 |---|---|---|
-| **Kapsul Waktu** | Tulis pesan, terkunci sampai tanggal yang dipilih | Menunggu data online |
-| **Kuis** | "Seberapa Kenal Kamu" — berdua bisa membuat kuis, lihat skor pasangan | Menunggu data online |
-| **Roulette** | Ide acak untuk malam ini, daftarnya bisa ditambah berdua | ✅ Jalan (masih lokal) |
+| **Kapsul Waktu** | Tulis pesan, terkunci sampai tanggal yang dipilih | Menunggu tahap berikutnya |
+| **Kuis** | "Seberapa Kenal Kamu" — berdua bisa membuat kuis, lihat skor pasangan | Menunggu tahap berikutnya |
+| **Roulette** | Ide acak untuk malam ini, daftarnya bisa ditambah berdua | ✅ Jalan, tersinkron |
 
 ## Yang sudah jalan
 
-- Kerangka aplikasi dengan tiga tab dan navigasi papan ketik
+- Login email & password — hanya dua akun yang dibuat manual di Firebase
 - Roulette: putar ide, tambah, hapus, kembalikan daftar awal
-- Daftar ide tersimpan di `localStorage` (`sela:roulette-options:v1`)
+- Daftar ide tersimpan di Firestore (`roulette/main`) dan langsung sinkron di dua perangkat
 - Tema terang/gelap mengikuti pengaturan perangkat
 - Bisa dipasang ke layar utama lewat manifest + service worker
 
 ## Rencana
 
-1. **Setup Firebase + login** — dua akun, email & password
-2. **Roulette online** — daftar ide tersinkron berdua
-3. **Kuis** — buat, jawab, lihat skor
-4. **Kapsul Waktu** — tulis, kunci, buka
-5. **Polish + PWA** — ikon, offline, pengalaman pasang di HP
+1. **Kuis** — buat, jawab, lihat skor
+2. **Kapsul Waktu** — tulis, kunci, buka
+3. **Polish + PWA** — ikon, offline, pengalaman pasang di HP
 
 ## Teknologi
 
 - HTML, CSS, JavaScript murni (tanpa framework)
-- Firebase Firestore + Authentication (tahap berikutnya)
+- Firebase Authentication + Cloud Firestore
+- Firebase modular SDK 13.3.0 dari CDN
 - GitHub Pages untuk hosting
+
+## Setup Firebase
+
+Project: `sela-9c40f`
+
+### 1. Dua akun
+
+Buat akun manual di **Firebase Console → Authentication → Users → Add user**:
+
+- Email + password untuk kamu
+- Email + password untuk pasangan
+
+Tidak ada halaman daftar di aplikasi — memang hanya untuk kalian berdua.
+
+### 2. Aturan Firestore
+
+Salin `firestore.rules.example` menjadi `firestore.rules`, ganti dua email
+contoh dengan email akun kalian, lalu tempel isinya ke:
+
+**Firebase Console → Firestore → Rules → Publish**
+
+File `firestore.rules` sengaja di-ignore oleh Git supaya email kalian tidak
+ikut ter-commit ke repo publik.
+
+### 3. Config web
+
+`assets/js/firebase-config.js` berisi config web Firebase. Nilai ini memang
+boleh terlihat publik — keamanan data dijaga oleh Authentication dan aturan
+Firestore, bukan oleh config ini.
 
 ## Menjalankan di lokal
 
-Buka `index.html` langsung di browser sudah cukup untuk melihat tampilan.
-Untuk mencoba service worker, jalankan server statis sederhana:
+Jangan buka lewat `file://` karena aplikasi memakai ES module dan Firebase.
+Jalankan server statis sederhana:
 
 ```bash
 python -m http.server 8000
@@ -53,16 +81,20 @@ sela/
 ├── index.html
 ├── manifest.json
 ├── sw.js
+├── firestore.rules.example
 ├── assets/
 │   ├── css/style.css
 │   ├── icons/
 │   └── js/
+│       ├── main.js
 │       ├── app.js
+│       ├── auth.js
+│       ├── firebase.js
+│       ├── firebase-config.js
 │       └── roulette.js
 └── README.md
 ```
 
 ## Catatan
 
-Data masih tersimpan di masing-masing perangkat. Sinkronisasi berdua
-menyusul setelah Firebase disiapkan.
+Situs ini `noindex` dan hanya berisi ruang untuk dua orang.

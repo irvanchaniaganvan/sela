@@ -1,0 +1,28 @@
+rules_version = '2';
+
+// ============================================================
+// SELA — aturan keamanan Firestore
+//
+// Salin file ini menjadi firestore.rules, ganti dua email di
+// bawah dengan email akun kalian, lalu tempel isinya ke:
+// Firebase Console → Firestore → Rules → Publish.
+//
+// Hanya dua akun itu yang bisa membaca dan menulis data Sela.
+// ============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isMember() {
+      return request.auth != null
+        && request.auth.token.email in [
+          'email-kamu@gmail.com',
+          'email-pasangan@gmail.com'
+        ];
+    }
+
+    match /{document=**} {
+      allow read, write: if isMember();
+    }
+  }
+}

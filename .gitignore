@@ -20,6 +20,9 @@ node_modules/
 firebase-debug.log
 *-debug.log
 
+# Aturan Firestore asli — isinya email kalian, jangan di-commit
+firestore.rules
+
 # Rahasia
 .env
 .env.*
