@@ -1,0 +1,28 @@
+# Sistem
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Log
+*.log
+npm-debug.log*
+
+# Dependensi (kalau nanti butuh tooling)
+node_modules/
+
+# Firebase
+.firebase/
+firebase-debug.log
+*-debug.log
+
+# Rahasia
+.env
+.env.*
+
+# Hasil build
+dist/
